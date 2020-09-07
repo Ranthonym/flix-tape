@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
-import "./App.css";
+// import "./App.css";
 
 import Search from "./components/Search/Search";
 import Movie from "./components/Movie/Movie";
+
+import classes from "../src/App.module.css";
 
 const MOVIE_API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=fd78d98e";
 
 function App() {
   const [movies, setMovies] = useState([]);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
     fetch(MOVIE_API_URL)
@@ -18,17 +21,36 @@ function App() {
   }, []);
 
   const search = (searchValue) => {
-    fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=4a3b711b`)
+    setErrorMessage(null);
+
+    fetch(`https://www.omdbapi.com/?s=${searchValue}&apikey=fd78d98e`)
       .then((response) => response.json())
       .then((jsonResponse) => {
-        setMovies(jsonResponse.Search);
+        if (jsonResponse.Response === "True") {
+          setMovies(jsonResponse.Search);
+        } else {
+          setErrorMessage(jsonResponse.Error);
+        }
       });
   };
+
+  console.log(movies);
 
   return (
     <div className="App">
       <header className="App-header">Welcome to Flix Tape!</header>
       <Search search={search} />
+      <div className={classes.Movies}>
+        {!errorMessage ? (
+          <span>nothing found</span>
+        ) : errorMessage ? (
+          <div className="errorMessage">{errorMessage}</div>
+        ) : (
+          movies.map((movie, index) => (
+            <Movie key={`${index}-${movie.Title}`} movie={movie} />
+          ))
+        )}
+      </div>
     </div>
   );
 }
