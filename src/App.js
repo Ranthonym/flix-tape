@@ -36,21 +36,21 @@ function App() {
 
   console.log(movies);
 
+  const foundMovies = !errorMessage ? (
+    <span style={{ textAlign: "center" }}>nothing found</span>
+  ) : errorMessage ? (
+    <div className={classes.ErrorMessage}>{errorMessage}</div>
+  ) : (
+    movies.map((movie, index) => (
+      <Movie key={`${index}-${movie.Title}`} movie={movie} />
+    ))
+  );
+
   return (
-    <div className="App">
-      <header className="App-header">Welcome to Flix Tape!</header>
+    <div className={classes.App}>
+      <header className={classes.AppHeader}>Welcome to Flix Tape!</header>
       <Search search={search} />
-      <div className={classes.Movies}>
-        {!errorMessage ? (
-          <span>nothing found</span>
-        ) : errorMessage ? (
-          <div className="errorMessage">{errorMessage}</div>
-        ) : (
-          movies.map((movie, index) => (
-            <Movie key={`${index}-${movie.Title}`} movie={movie} />
-          ))
-        )}
-      </div>
+      <div className={classes.Movies}>{foundMovies}</div>
     </div>
   );
 }
