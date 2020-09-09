@@ -7,9 +7,11 @@ const DEFAULT_PLACEHOLDER_IMAGE =
 
 const Movie = (movie) => {
   const poster =
-    movie.Poster === "N/A" ? DEFAULT_PLACEHOLDER_IMAGE : movie.movie.Poster;
+    movie.movie.Poster === "N/A"
+      ? DEFAULT_PLACEHOLDER_IMAGE
+      : movie.movie.Poster;
 
-  console.log(movie);
+  // console.log(movie);
   return (
     <div className={classes.Movie}>
       <h2>{movie.movie.Title}</h2>

@@ -33,7 +33,6 @@ function App() {
       .then((jsonResponse) => {
         if (jsonResponse.data.Response === "True") {
           setMovies(jsonResponse.data.Search);
-          console.log(jsonResponse.data.Search[1]);
           setLoading(false);
         } else {
           setErrorMessage(jsonResponse.data.Error);
@@ -53,16 +52,8 @@ function App() {
         <Movie key={`${index}-${movie.Title}`} movie={movie} />
       ))
     );
-  // const foundMovies = errorMessage ? (
-  //   <div className="errorMessage">{errorMessage}</div>
-  // ) : (
-  //   movies.map((movie, index) => (
-  //     <Movie key={`${index}-${movie.Title}`} movie={movie} />
-  //   ))
-  // );
 
-  // console.log(`movie array:  ${movies}`);
-  movies.forEach((movie) => console.log(movie));
+  // movies.forEach((movie) => console.log(movie));
 
   return (
     <div className="App">
