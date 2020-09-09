@@ -3,7 +3,7 @@ import "./App.css";
 import axios from "axios";
 
 import Search from "./Search/Search";
-import Movie from "./Movie/Movie";
+import MovieCard from "./Movie/MovieCard";
 import Header from "./Header/Header";
 
 // import classes from "../src/App.module.css";
@@ -49,7 +49,7 @@ function App() {
       <div className="errorMessage">{errorMessage}</div>
     ) : (
       movies.map((movie, index) => (
-        <Movie key={`${index}-${movie.Title}`} movie={movie} />
+        <MovieCard key={`${index}-${movie.Title}`} movie={movie} />
       ))
     );
 
@@ -64,7 +64,7 @@ function App() {
 
         <p className="App-intro">welcome to FlixTape</p>
 
-        <div className="movies">{foundMovies}</div>
+        <div className="movie-list">{foundMovies}</div>
       </div>
     </div>
   );

@@ -21,7 +21,7 @@
   padding: 40px;
 }
 
-.movies {
+.movie-list {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
