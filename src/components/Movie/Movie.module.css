@@ -1,5 +1,12 @@
+/* .Movie {
+  padding: 2rem 4rem;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.25);
+  margin-bottom: 2rem;
+  background-color: white;
+} */
+
 .Movie {
   padding: 5px 25px 10px 25px;
   max-width: 25%;
-  box-sizing: border-box;
 }

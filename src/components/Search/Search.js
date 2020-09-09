@@ -20,8 +20,8 @@ const Search = (props) => {
   };
 
   return (
-    <div className={classes.Search}>
-      <form className={classes.Form}>
+    <div className="search">
+      <form className={classes.Search}>
         <input
           className={classes.Input}
           placeholder="Enter a movie name"

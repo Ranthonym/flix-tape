@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-.AppHeader {
+.App-header {
   background-color: #282c34;
   height: 70px;
   display: flex;
@@ -15,15 +15,14 @@
   cursor: pointer;
 }
 
-.Movies {
+.container {
+  margin: 0 auto;
+  max-width: 1000px;
+  padding: 40px;
+}
+
+.movies {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  box-sizing: border-box;
-}
-
-.ErrorMessage {
-  margin: auto;
-  font-weight: bold;
-  color: rgb(161, 15, 15);
 }
