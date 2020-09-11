@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import "./App.css";
 import axios from "axios";
 
@@ -10,36 +10,76 @@ import Header from "./Header/Header";
 
 const MOVIE_API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=fd78d98e";
 
-function App() {
-  const [movies, setMovies] = useState([]);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(true);
+const initialState = {
+  loading: true,
+  movies: [],
+  errorMessage: null,
+};
 
-  useEffect(() => {
-    fetch(MOVIE_API_URL)
-      .then((response) => response.json())
-      .then((jsonResponse) => {
-        // setMovies(jsonResponse.Search);
-        setLoading(false);
-      });
-  }, []);
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "API_REQUEST_INITIATED":
+      return {
+        ...state,
+        loading: true,
+        errorMessage: null,
+      };
+    case "API_REQUEST_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        movies: action.payload,
+      };
+    case "API_REQUEST_FAILURE":
+      return {
+        ...state,
+        loading: false,
+        errorMessage: action.error,
+      };
+    default:
+      return state;
+  }
+};
+
+function App() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  // useEffect(() => {
+  //   fetch(MOVIE_API_URL)
+  //     .then((response) => response.json())
+  //     .then((jsonResponse) => {
+  //       dispatch({
+  //         type: "API_REQUEST_SUCCESS",
+  //         payload: jsonResponse.Search,
+  //       });
+  //       console.log(jsonResponse.Search);
+  //     });
+  // }, []);
 
   const search = (searchValue) => {
-    setLoading(true);
-    setErrorMessage(null);
+    dispatch({
+      type: "API_REQUEST_INITIATED",
+    });
 
     axios
       .get(`https://www.omdbapi.com/?s=${searchValue}&apikey=fd78d98e`)
       .then((jsonResponse) => {
         if (jsonResponse.data.Response === "True") {
-          setMovies(jsonResponse.data.Search);
-          setLoading(false);
+          dispatch({
+            type: "API_REQUEST_SUCCESS",
+            payload: jsonResponse.data.Search,
+          });
         } else {
-          setErrorMessage(jsonResponse.data.Error);
-          setLoading(false);
+          dispatch({
+            type: "API_REQUEST_FAILURE",
+            error: jsonResponse.data.Error,
+          });
         }
       });
   };
+
+  const { movies, errorMessage, loading } = state;
+  // console.log(loading);
 
   const foundMovies =
     loading && !errorMessage ? (
@@ -52,6 +92,8 @@ function App() {
         <MovieCard key={`${index}-${movie.Title}`} movie={movie} />
       ))
     );
+
+  // console.log(movies);
 
   // movies.forEach((movie) => console.log(movie));
 
