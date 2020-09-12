@@ -5,41 +5,11 @@ import axios from "axios";
 import Search from "./Search/Search";
 import MovieCard from "./Movie/MovieCard";
 import Header from "./Header/Header";
+import { initialState, reducer } from "../store/reducer";
 
 // import classes from "../src/App.module.css";
 
 const MOVIE_API_URL = "https://www.omdbapi.com/?s=man&apikey=fd78d98e";
-
-const initialState = {
-  loading: true,
-  movies: [],
-  errorMessage: null,
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case "API_REQUEST_INITIATED":
-      return {
-        ...state,
-        loading: true,
-        errorMessage: null,
-      };
-    case "API_REQUEST_SUCCESS":
-      return {
-        ...state,
-        loading: false,
-        movies: action.payload,
-      };
-    case "API_REQUEST_FAILURE":
-      return {
-        ...state,
-        loading: false,
-        errorMessage: action.error,
-      };
-    default:
-      return state;
-  }
-};
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
