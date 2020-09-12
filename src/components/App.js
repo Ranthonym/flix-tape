@@ -8,7 +8,7 @@ import Header from "./Header/Header";
 
 // import classes from "../src/App.module.css";
 
-const MOVIE_API_URL = "http://www.omdbapi.com/?i=tt3896198&apikey=fd78d98e";
+const MOVIE_API_URL = "https://www.omdbapi.com/?s=man&apikey=fd78d98e";
 
 const initialState = {
   loading: true,
@@ -44,17 +44,14 @@ const reducer = (state, action) => {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // useEffect(() => {
-  //   fetch(MOVIE_API_URL)
-  //     .then((response) => response.json())
-  //     .then((jsonResponse) => {
-  //       dispatch({
-  //         type: "API_REQUEST_SUCCESS",
-  //         payload: jsonResponse.Search,
-  //       });
-  //       console.log(jsonResponse.Search);
-  //     });
-  // }, []);
+  useEffect(() => {
+    axios.get(MOVIE_API_URL).then((jsonResponse) => {
+      dispatch({
+        type: "API_REQUEST_SUCCESS",
+        payload: jsonResponse.data.Search,
+      });
+    });
+  }, []);
 
   const search = (searchValue) => {
     dispatch({
